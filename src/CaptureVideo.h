@@ -1,12 +1,17 @@
-#ifndef CAPTUREVIDEO_H
-#define CAPTUREVIDEO_H
+#ifndef CAPTUREVIDEO_H__
+#define CAPTUREVIDEO_H__
+#include <opencv2\opencv.hpp>
+#include <string>
 
-class VideoCapture[
+class CaptureVideo{
 	public:
-		Mat VIdeo;
+
+		void captureV();
+		
 
 	private:
-
+		cv::VideoCapture videoCapture;
+};
 
 
 #endif

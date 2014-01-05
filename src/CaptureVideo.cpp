@@ -9,7 +9,7 @@ void CaptureVideo::captureV(){
 	videoCapture.open(0);
 	namedWindow("PureVideo", CV_WINDOW_AUTOSIZE);
 	while(true){
-		Mat Purevideo;
+
 		
 		bool succes = videoCapture.read(Purevideo);
 		if (succes == false){break;}

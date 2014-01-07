@@ -7,6 +7,7 @@ class CaptureVideo{
 	public:
 
 		void captureV();
+		void showCaptureV();
 		cv::Mat Purevideo;
 
 	private:

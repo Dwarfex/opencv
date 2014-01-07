@@ -1,12 +1,14 @@
 
 #include "CaptureVideo.h"
-//using namespace cv;
+#include "backgroundsubtraction.h"
+using namespace cv;
 using namespace std;
 
 int main(){
 	
 	CaptureVideo captureVideo;
+	BackgroundSubtraction bgs;
 
-		captureVideo.captureV();
-
+		//captureVideo.captureV();
+		bgs.backgroundSubtraction();
 }

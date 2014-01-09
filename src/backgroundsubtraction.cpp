@@ -8,8 +8,8 @@ using namespace cv;
 using namespace std;
 
  
-const int nmixtures =5;
-const bool bShadowDetection = false;
+const int nmixtures =8;
+const bool bShadowDetection = true;
 const int history = 3;
 
 
@@ -17,15 +17,7 @@ void BackgroundSubtraction::backgroundSubtraction(){
 	Mat frame; //Kamera Input, unangetstest
 	Mat front; //Fordegrund (Hand)
 	Mat back; //Hintegrunde
-	Mat cannyfilter;
 
-	//CammyFilter
-	int edgeThresh = 3;
-  int lowThreshold = 45;
-  //int const max_lowThreshold = 100;
-  int ratio = 3;
-  int kernel_size = 3;
-  //
 
     VideoCapture videoCapture;
 	videoCapture.open(0);
@@ -34,7 +26,7 @@ void BackgroundSubtraction::backgroundSubtraction(){
 	BackgroundSubtractorMOG2 bgSubtraction (history,nmixtures,bShadowDetection);
 	//BackgroundSubtractorMOG2 bgSubtraction (nmixtures,bShadowDetection);
 
-	int backgroundFrame = 500;
+	int backgroundFrame = 200;
 
 
 	while(true){
@@ -51,7 +43,7 @@ void BackgroundSubtraction::backgroundSubtraction(){
 		} else {
 			bgSubtraction.operator()(frame,front,0);
 		}
-
+		//bgSubtraction.operator()(frame,front);
 
 		bgSubtraction.getBackgroundImage(back);
 		erode(front,front,Mat());
@@ -59,10 +51,7 @@ void BackgroundSubtraction::backgroundSubtraction(){
 
 		findContours(front,contours,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_NONE);
 		
-		blur( front, cannyfilter, Size(3,3) );
-		Canny( cannyfilter, cannyfilter, lowThreshold, lowThreshold*ratio, kernel_size );
 		
-		//findContours(cannyfilter,contours,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_NONE);
 
 		for(int i=0; i < contours.size();i++){
 			//Kleine unwichtige gebiete ignorieren
@@ -114,8 +103,8 @@ void BackgroundSubtraction::backgroundSubtraction(){
                         putText(frame, "Recording Background", cvPoint(30,30), FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,200,250), 1, CV_AA);
 
 
-		imshow("Cammy-Filter",cannyfilter);
 		imshow("Hand",front);
+		imshow("Hand",back);
 		imshow("PureVideo",frame);
 		waitKey(30);
 	}

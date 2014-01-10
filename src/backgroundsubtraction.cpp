@@ -7,7 +7,7 @@
 using namespace cv;
 using namespace std;
 
- 
+//Variablen für BckgoundSubstration
 const int nmixtures =8;
 const bool bShadowDetection = true;
 const int history = 3;
@@ -16,17 +16,16 @@ const int history = 3;
 void BackgroundSubtraction::backgroundSubtraction(){
 	Mat frame; //Kamera Input, unangetstest
 	Mat front; //Fordegrund (Hand)
-	Mat back; //Hintegrunde
+	Mat back; //Hintegrunde (der Rest)
 
 
     VideoCapture videoCapture;
 	videoCapture.open(0);
 
 	
-	BackgroundSubtractorMOG2 bgSubtraction (history,nmixtures,bShadowDetection);
-	//BackgroundSubtractorMOG2 bgSubtraction (nmixtures,bShadowDetection);
-
-	int backgroundFrame = 200;
+	BackgroundSubtractorMOG2 bgSubtraction (history,nmixtures,bShadowDetection);  
+	
+	int backgroundFrame = 200; //Frame anzahl bis der Hintergrund festgelegt wird 
 
 
 	while(true){
@@ -35,21 +34,22 @@ void BackgroundSubtraction::backgroundSubtraction(){
 
 		bool succes = videoCapture.read(frame);
 		if (succes == false){break;}
-		 flip(frame,frame,1); // drehe das Video
+		flip(frame,frame,1); // drehe das Video 
 
-		if(backgroundFrame>0){
-			bgSubtraction.operator()(frame,front);
+		if(backgroundFrame>0){ //wende BGSubstructionMOG2 an bis "backgroundFrame" auf Bull ist
+			bgSubtraction.operator()(frame,front); 
 			backgroundFrame--;
 		} else {
-			bgSubtraction.operator()(frame,front,0);
+			bgSubtraction.operator()(frame,front,0); //sobald "backgroundFrame" null ist, ist der Hintergrund festgelegt
 		}
-		//bgSubtraction.operator()(frame,front);
 
 		bgSubtraction.getBackgroundImage(back);
-		erode(front,front,Mat());
-		dilate(front,front,Mat());
 
-		findContours(front,contours,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_NONE);
+		erode(front,front,Mat()); //Wende Eroding an
+		dilate(front,front,Mat()); //Wende Delating an
+
+		//In OpenCV intigrietes Kantenerkennungs system das den CannyFillter benutzt
+		findContours(front,contours,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_NONE); 
 		
 		
 
@@ -60,6 +60,7 @@ void BackgroundSubtraction::backgroundSubtraction(){
 				tcontours.push_back(contours[i]);
 				drawContours(frame,tcontours,-1,Scalar(0,0,255),2);
 
+				/*
 				//Detect Hull in current contour
                                 vector<vector<Point> > hulls(1);
                                 vector<vector<int> > hullsI(1);
@@ -94,13 +95,13 @@ void BackgroundSubtraction::backgroundSubtraction(){
                                                         palm_points.push_back(ptEnd);
                                                 }
 										}
-								}
+								}*/
 			}
 
 		}
 		
 		 if(backgroundFrame>0)
-                        putText(frame, "Recording Background", cvPoint(30,30), FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,200,250), 1, CV_AA);
+                        putText(frame, "Hintergrund aufnehmen", cvPoint(30,30), FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,200,250), 1, CV_AA);
 
 
 		imshow("Hand",front);

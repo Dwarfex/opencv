@@ -8,9 +8,9 @@ using namespace cv;
 using namespace std;
 
 //Variablen für BckgoundSubstration
-const int nmixtures =8;
-const bool bShadowDetection = true;
-const int history = 3;
+const int nmixtures =5;
+const bool bShadowDetection = false;
+const int history = 15;
 
 
 void BackgroundSubtraction::backgroundSubtraction(){

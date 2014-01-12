@@ -63,7 +63,7 @@ void BackgroundSubtraction::backgroundSubtraction(){
 				drawContours(frame,tcontours,-1,Scalar(0,0,255),2); //zeichen Kontur
 
 				
-				//ERkenne hülle
+				//Erkenne huelle
                 vector<vector<Point> > hulls(1);
                 vector<vector<int> > hullsI(1);
                 convexHull(Mat(tcontours[0]),hulls[0],false);
@@ -78,20 +78,14 @@ void BackgroundSubtraction::backgroundSubtraction(){
 					for(int x = 0; x < frame.cols; x++){
 						
 						for(int y = 0; y < frame.rows; y++){
-							//uchar pixel = frame.at<uchar>(y,x);
+							
 							
 							Vec3b colour = frame.at<Vec3b>(Point(x, y));
 							if(colour.val[0]==0 && colour.val[1]==0 && colour.val[2]==255){
-							
-							//if(pixel == 255){
-								
 								redPixelCount++;
 								redPixely = redPixely + y;
 								redPixelx = redPixelx + x;
 							}
-
-								
-
 						}
 					}
 					if(redPixelCount > 0){
@@ -101,12 +95,10 @@ void BackgroundSubtraction::backgroundSubtraction(){
 					 //ende schwerpunkt
 
 					 // Kreuz zeichnen
-						// cvtColor(greyscale, greyscale, CV_GRAY2BGR);
 						Point center(middleX, middleY);
 						line(frame,Point(center.x - crosssize, center.y),Point(center.x + crosssize, center.y),Scalar(0,255,0),2,8);
 						line(frame,Point(center.x, center.y - crosssize),Point(center.x, center.y + crosssize),Scalar(0,255,0),2,8);
-
-					 //ende Kreuz zeichnen
+					//ende Kreuz zeichnen
 			}
 
 		}

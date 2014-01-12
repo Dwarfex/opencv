@@ -56,13 +56,14 @@ void BackgroundSubtraction::backgroundSubtraction(){
 
 		for(int i=0; i < contours.size();i++){
 			//Kleine unwichtige gebiete ignorieren
-			if(contourArea(contours[i])>=5000) {
+			if(contourArea(contours[i])>=8000) {
+
+				//Kanten und
 				vector<vector<Point> > tcontours;
 				tcontours.push_back(contours[i]);
 				drawContours(frame,tcontours,-1,Scalar(0,0,255),2); //zeichen Kontur
 
-				
-				//Erkenne huelle
+				//huelle zeichen
                 vector<vector<Point> > hulls(1);
                 vector<vector<int> > hullsI(1);
                 convexHull(Mat(tcontours[0]),hulls[0],false);
@@ -83,9 +84,9 @@ void BackgroundSubtraction::backgroundSubtraction(){
                         putText(frame, "Hintergrund aufnehmen", cvPoint(30,30), FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,200,250), 1, CV_AA);
 
 
-		imshow("Hand",front);
-		imshow("Hand",back);
-		imshow("PureVideo",frame);
+		//imshow("Hand",front);
+		//imshow("Hintergrund",back);
+		imshow("Video",frame);
 		waitKey(30);
 	}
 

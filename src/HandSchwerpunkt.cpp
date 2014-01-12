@@ -17,7 +17,7 @@ void handSchwerpunkt(cv::Mat& frame){
 							
 							
 							Vec3b colour = frame.at<Vec3b>(Point(x, y));
-							if(colour.val[0]==0 && colour.val[1]==0 && colour.val[2]==255){
+							if(colour.val[0]==0 && colour.val[1]==255 && colour.val[2]==0){
 								redPixelCount++;
 								redPixely = redPixely + y;
 								redPixelx = redPixelx + x;

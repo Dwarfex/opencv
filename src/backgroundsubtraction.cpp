@@ -18,9 +18,7 @@ void BackgroundSubtraction::backgroundSubtraction(){
 	Mat frame; //Kamera Input, unangetstest
 	Mat front; //Fordegrund (Hand)
 	Mat back; //Hintegrunde (der Rest)
-	int middleX = 0;
-	int middleY = 0;
-	int crosssize = 10;
+	
 
     VideoCapture videoCapture;
 	videoCapture.open(0);
@@ -28,7 +26,7 @@ void BackgroundSubtraction::backgroundSubtraction(){
 	
 	BackgroundSubtractorMOG2 bgSubtraction (history,nmixtures,bShadowDetection);  
 	
-	int backgroundFrame = 200; //Frame anzahl bis der Hintergrund festgelegt wird 
+	int backgroundFrame = 75; //Frame anzahl bis der Hintergrund festgelegt wird 
 
 
 	while(true){

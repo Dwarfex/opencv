@@ -60,44 +60,16 @@ void BackgroundSubtraction::backgroundSubtraction(){
 			if(contourArea(contours[i])>=5000) {
 				vector<vector<Point> > tcontours;
 				tcontours.push_back(contours[i]);
-				drawContours(frame,tcontours,-1,Scalar(0,0,255),2);
+				drawContours(frame,tcontours,-1,Scalar(0,0,255),2); //zeichen Kontur
 
-				/*
-				//Detect Hull in current contour
-                                vector<vector<Point> > hulls(1);
-                                vector<vector<int> > hullsI(1);
-                                convexHull(Mat(tcontours[0]),hulls[0],false);
-                                convexHull(Mat(tcontours[0]),hullsI[0],false);
-                                drawContours(frame,hulls,-1,cv::Scalar(0,255,0),2);
+				
+				//ERkenne hülle
+                vector<vector<Point> > hulls(1);
+                vector<vector<int> > hullsI(1);
+                convexHull(Mat(tcontours[0]),hulls[0],false);
+                convexHull(Mat(tcontours[0]),hullsI[0],false);
+                drawContours(frame,hulls,-1,cv::Scalar(0,255,0),2);
 
-                                //Find minimum area rectangle to enclose hand
-                                RotatedRect rect=minAreaRect(Mat(tcontours[0]));
-
-                                //Find Convex Defects
-                                vector<Vec4i> defects;
-                                if(hullsI[0].size()>0)
-                                {
-                                        Point2f rect_points[4]; rect.points( rect_points );
-                                        for( int j = 0; j < 4; j++ )
-                                                line( frame, rect_points[j], rect_points[(j+1)%4], Scalar(255,0,0), 1, 8 );
-                                        Point rough_palm_center;
-                                        convexityDefects(tcontours[0], hullsI[0], defects);
-                                        if(defects.size()>=3)
-                                        {
-                                                vector<Point> palm_points;
-                                                for(int j=0;j<defects.size();j++)
-                                                {
-                                                        int startidx=defects[j][0]; Point ptStart( tcontours[0][startidx] );
-                                                        int endidx=defects[j][1]; Point ptEnd( tcontours[0][endidx] );
-                                                        int faridx=defects[j][2]; Point ptFar( tcontours[0][faridx] );
-                                                        //Sum up all the hull and defect points to compute average
-                                                        rough_palm_center+=ptFar+ptStart+ptEnd;
-                                                        palm_points.push_back(ptFar);
-                                                        palm_points.push_back(ptStart);
-                                                        palm_points.push_back(ptEnd);
-                                                }
-										}
-								}*/
 
 					int redPixelCount = 0;
 					int redPixelx = 0;
